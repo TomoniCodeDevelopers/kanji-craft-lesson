@@ -3,11 +3,12 @@
   "version": "0.0.0",
   "dependencies": {
     "minecraft": "*",
-    "kanji-craft": "github:TomoniCodeDevelopers/kanji-craft#v1.0.0"
+    "kanji-craft": "github:TomoniCodeDevelopers/kanji-craft#v1.0.1"
   },
   "files": ["docs/tutorial.md"],
   "public": true
 }
+
 
 
 
