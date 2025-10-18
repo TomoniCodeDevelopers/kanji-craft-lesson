@@ -1,5 +1,5 @@
 ```package
-github:TomoniCodeDevelopers/kanji-craft#v1.0.0
+github:TomoniCodeDevelopers/kanji-craft#v1.0.1
 ```
 
 # @explicitHints true
@@ -42,6 +42,7 @@ Minecraftに戻ってきて、
 ### 実行
 エージェントに文字を書いてもらう向きを「床」「壁」どちらかえらんで、
 原点の位置を決めて実行すると、エージェントが一つずつブロックを置いて漢字を描いてくれます。  
+
 
 
 
