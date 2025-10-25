@@ -170,10 +170,10 @@
 
 <body>
   <h1>漢字ビットマップ変換ツール</h1>
-  <p class="lead">名前を入力するとプレビューと出力が自動更新されます（最大10文字）。上のボタンで<strong>16進数コード</strong>をコピーできます。</p>
+  <p class="lead">名前を入力するとプレビューと出力が自動更新されます（最大14文字）。上のボタンで<strong>16進数コード</strong>をコピーできます。</p>
 
   <div class="inputWrap">
-    <input id="textInput" type="text" maxlength="20" placeholder="ここに名前を入力（例：山田太郎）" autofocus autocomplete="off">
+    <input id="textInput" type="text" maxlength="14" placeholder="ここに名前を入力（例：山田太郎）" autofocus autocomplete="off">
     <button id="btnCopyHeader" class="primary" title="16進数コードをクリップボードへ">16進数コードをコピー</button>
   </div>
 
@@ -405,7 +405,7 @@
       outputHeader.value = '';
       outputArray.value = '';
 
-      if (!text || text.length > 10) return;
+      if (!text || text.length > 20) return;
 
       const glyphsPreview = []; // プレビュー用：回転なし
       const glyphsOutput = []; // 出力用：縦書き時に回転反映
