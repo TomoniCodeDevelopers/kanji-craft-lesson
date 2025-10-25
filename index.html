@@ -1,59 +1,173 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
-<meta charset="UTF-8">
-<title>漢字ビットマップ変換ツール（16進数コード）</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<style>
-  :root { --accent:#2a6afc; }
-  * { box-sizing: border-box; }
-  body {
-    font-family: system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans","Hiragino Kaku Gothic ProN","Yu Gothic UI","Yu Gothic","Meiryo",sans-serif;
-    padding: 1.25rem; line-height: 1.6; background:#fff;
-  }
-  h1 { font-size:1.25rem; margin:0 0 .75rem 0; }
-  .lead { margin-bottom:.75rem; color:#444; }
-  .inputWrap { display:flex; gap:.5rem; align-items:center; flex-wrap:wrap; }
-  #textInput {
-    flex:1 1 520px; font-size:1.6rem; padding:.65rem .85rem; border:2px solid #ddd; border-radius:10px; outline:none;
-  }
-  #textInput:focus { border-color:var(--accent); box-shadow:0 0 0 3px rgba(42,106,252,.15); }
-  button {
-    font-size:1rem; padding:.55rem .95rem; border:1px solid #ccc; border-radius:10px; background:#fff; cursor:pointer;
-  }
-  button.primary { border-color:var(--accent); color:#fff; background:var(--accent); }
-  fieldset { border:1px solid #e5e5e5; border-radius:10px; padding:.75rem 1rem; margin-top:.75rem; background:#fff; }
-  legend { padding:0 .4rem; color:#333; }
-  details summary { cursor:pointer; list-style:none; font-weight:600; margin:.2rem 0; }
-  details[open] summary { color:var(--accent); }
-  .row { display:flex; gap:1rem; align-items:center; flex-wrap:wrap; margin:.25rem 0; }
-  select, input[type="range"], input[type="checkbox"] { font-size:1rem; }
+  <meta charset="UTF-8">
+  <title>漢字ビットマップ変換ツール（16進数コード）</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    :root {
+      --accent: #2a6afc;
+    }
 
-  /* プレビュー */
-  #canvasContainer {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    align-items: flex-start;
-  }
-  .canvasWrap {
-    border:1px solid #eee; padding:8px; border-radius:10px; background:#fff;
-    width: fit-content;
-    overflow: visible;
-    display: inline-block;
-    vertical-align: top;
-  }
-  .canvasWrap canvas { display:block; border:1px solid #ddd; image-rendering: pixelated; }
+    * {
+      box-sizing: border-box;
+    }
 
-  textarea {
-    width:100%; height:160px; font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
-    border-radius:10px; border:1px solid #ddd; padding:8px; background:#fff;
-  }
-  small.hint { color:#666; }
-  .outputs { display:grid; gap:12px; grid-template-columns: 1fr; }
-  .btnRow { display:flex; gap:.5rem; flex-wrap:wrap; }
-</style>
+    body {
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic UI", "Yu Gothic", "Meiryo", sans-serif;
+      padding: 1.25rem;
+      line-height: 1.6;
+      background: #fff;
+    }
+
+    h1 {
+      font-size: 1.25rem;
+      margin: 0 0 .75rem 0;
+    }
+
+    .lead {
+      margin-bottom: .75rem;
+      color: #444;
+    }
+
+    .inputWrap {
+      display: flex;
+      gap: .5rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    #textInput {
+      flex: 1 1 520px;
+      font-size: 1.6rem;
+      padding: .65rem .85rem;
+      border: 2px solid #ddd;
+      border-radius: 10px;
+      outline: none;
+    }
+
+    #textInput:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(42, 106, 252, .15);
+    }
+
+    button {
+      font-size: 1rem;
+      padding: .55rem .95rem;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      background: #fff;
+      cursor: pointer;
+    }
+
+    button.primary {
+      border-color: var(--accent);
+      color: #fff;
+      background: var(--accent);
+    }
+
+    fieldset {
+      border: 1px solid #e5e5e5;
+      border-radius: 10px;
+      padding: .75rem 1rem;
+      margin-top: .75rem;
+      background: #fff;
+    }
+
+    legend {
+      padding: 0 .4rem;
+      color: #333;
+    }
+
+    details summary {
+      cursor: pointer;
+      list-style: none;
+      font-weight: 600;
+      margin: .2rem 0;
+    }
+
+    details[open] summary {
+      color: var(--accent);
+    }
+
+    .row {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      flex-wrap: wrap;
+      margin: .25rem 0;
+    }
+
+    select,
+    input[type="range"],
+    input[type="checkbox"] {
+      font-size: 1rem;
+    }
+
+    /* プレビュー */
+    #canvasContainer {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: flex-start;
+    }
+
+    .canvasWrap {
+      border: 1px solid #eee;
+      padding: 8px;
+      border-radius: 10px;
+      background: #fff;
+      width: fit-content;
+      overflow: visible;
+      display: inline-block;
+      vertical-align: top;
+    }
+
+    .canvasWrap canvas {
+      display: block;
+      border: 1px solid #ddd;
+      image-rendering: pixelated;
+    }
+
+    textarea {
+      width: 100%;
+      height: 160px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      border-radius: 10px;
+      border: 1px solid #ddd;
+      padding: 8px;
+      background: #fff;
+    }
+
+    small.hint {
+      color: #666;
+    }
+
+    .outputs {
+      display: grid;
+      gap: 12px;
+      grid-template-columns: 1fr;
+    }
+
+    .btnRow {
+      display: flex;
+      gap: .5rem;
+      flex-wrap: wrap;
+    }
+
+    /* 出力②を折りたたみ */
+    details#outArrayDetails {
+      margin-top: .5rem;
+    }
+
+    details#outArrayDetails>summary {
+      cursor: pointer;
+      font-weight: 600;
+    }
+  </style>
 </head>
+
 <body>
   <h1>漢字ビットマップ変換ツール</h1>
   <p class="lead">名前を入力するとプレビューと出力が自動更新されます（最大10文字）。上のボタンで<strong>16進数コード</strong>をコピーできます。</p>
@@ -76,9 +190,13 @@
 
         <label>フォント：
           <select id="fontSelector" title="端末にあるフォントの有無で見た目が変わります">
-            <option value='"Noto Sans CJK JP","Yu Gothic","Meiryo","MS Gothic","Hiragino Kaku Gothic ProN",sans-serif' selected>ゴシック（汎用スタック）</option>
-            <option value='"Hiragino Maru Gothic ProN","M PLUS Rounded 1c","Kosugi Maru","Yu Gothic UI","Meiryo",sans-serif'>丸ゴ</option>
-            <option value='"UD Digi Kyokasho N-R","UD デジタル 教科書体 N-R","Meiryo","Yu Gothic",sans-serif'>UDデジタル教科書体</option>
+            <option value='"Noto Sans CJK JP","Yu Gothic","Meiryo","MS Gothic","Hiragino Kaku Gothic ProN",sans-serif'
+              selected>ゴシック（汎用スタック）</option>
+            <option
+              value='"Hiragino Maru Gothic ProN","M PLUS Rounded 1c","Kosugi Maru","Yu Gothic UI","Meiryo",sans-serif'>
+              丸ゴ</option>
+            <option value='"UD Digi Kyokasho N-R","UD デジタル 教科書体 N-R","Meiryo","Yu Gothic",sans-serif'>UDデジタル教科書体
+            </option>
             <option value='"Noto Serif CJK JP","Yu Mincho","Hiragino Mincho ProN","MS Mincho",serif'>明朝</option>
             <option value='"MS Gothic","MS PGothic","Osaka-Mono","Noto Sans Mono CJK JP",monospace'>等幅寄り（角ばり）</option>
           </select>
@@ -93,6 +211,7 @@
         </label>
 
         <label>グリッド：<input type="checkbox" id="grid" checked></label>
+        <label><input type="checkbox" id="vertical"> 縦書き（横向き表示）</label>
       </div>
 
       <div class="row">
@@ -100,7 +219,6 @@
           <input type="range" id="thSlider" min="0" max="255" value="60">
           <span id="thVal">60</span>
         </label>
-        <label><input type="checkbox" id="invert"> 反転（白字→黒字）</label>
       </div>
 
       <small class="hint">※ 拡大描画→縮小サンプリング＋右端欠け対策の余白付与を行っています。</small>
@@ -121,250 +239,375 @@
       </div>
     </fieldset>
 
-    <fieldset>
-      <legend>出力②：配列（MakeCode用）</legend>
-      <textarea id="outputArray" readonly placeholder="let 配列 = [[...],[...],...];"></textarea>
-      <div class="btnRow">
-        <button id="btnCopyArray2">MakeCode形式（配列）をコピー</button>
-        <button id="btnSave" title="配列出力をJSON形式で保存">JSON保存</button>
-      </div>
-    </fieldset>
+    <!-- 出力②はデフォルト非表示 -->
+    <details id="outArrayDetails">
+      <summary>出力②：配列（MakeCode用）</summary>
+      <fieldset>
+        <legend>出力②：配列（MakeCode用）</legend>
+        <textarea id="outputArray" readonly placeholder="let 配列 = [[...],[...],...];"></textarea>
+        <div class="btnRow">
+          <button id="btnCopyArray2">MakeCode形式（配列）をコピー</button>
+          <button id="btnSave" title="配列出力をJSON形式で保存">JSON保存</button>
+        </div>
+      </fieldset>
+    </details>
   </div>
 
-<script>
-  // 要素
-  const $ = id => document.getElementById(id);
-  const textInput = $('textInput');
-  const sizeSel = $('sizeSelector');
-  const fontSel = $('fontSelector');
-  const fontWeightSel = $('fontWeight');
-  const thSlider = $('thSlider');
-  const thVal = $('thVal');
-  const invertChk = $('invert');
-  const gridChk = $('grid');
-  const canvasContainer = $('canvasContainer');
-  const outputHeader = $('outputHeader');
-  const outputArray = $('outputArray');
-  const btnCopyHeader = $('btnCopyHeader');
-  const btnCopyHeader2 = $('btnCopyHeader2');
-  const btnCopyArray2 = $('btnCopyArray2');
-  const btnSave = $('btnSave');
+  <script>
+    // 要素
+    const $ = id => document.getElementById(id);
+    const textInput = $('textInput');
+    const sizeSel = $('sizeSelector');
+    const fontSel = $('fontSelector');
+    const fontWeightSel = $('fontWeight');
+    const thSlider = $('thSlider');
+    const thVal = $('thVal');
+    const verticalChk = $('vertical');
+    const gridChk = $('grid');
+    const canvasContainer = $('canvasContainer');
+    const outputHeader = $('outputHeader');
+    const outputArray = $('outputArray');
+    const btnCopyHeader = $('btnCopyHeader');
+    const btnCopyHeader2 = $('btnCopyHeader2');
+    const btnCopyArray2 = $('btnCopyArray2');
+    const btnSave = $('btnSave');
 
-  // 保存先を「同一タブの間だけ」に限定（テキストは保存しない）
-  const SS_KEY = 'kanji_bitmap_settings_v7';
-  function saveSettings(){
-    const s = {
-      size: sizeSel.value,
-      font: fontSel.value,
-      weight: fontWeightSel.value,
-      th: thSlider.value,
-      invert: invertChk.checked,
-      grid: gridChk.checked
+    // 保存先を「同一タブの間だけ」に限定（テキストは保存しない）
+    const SS_KEY = 'kanji_bitmap_settings_v8';
+    function saveSettings() {
+      const s = {
+        size: sizeSel.value,
+        font: fontSel.value,
+        weight: fontWeightSel.value,
+        th: thSlider.value,
+        vertical: verticalChk.checked,
+        grid: gridChk.checked
+      };
+      try { sessionStorage.setItem(SS_KEY, JSON.stringify(s)); } catch (e) { }
+    }
+    function loadSettings() {
+      try {
+        const s = JSON.parse(sessionStorage.getItem(SS_KEY) || '{}');
+        if (s.size) sizeSel.value = s.size;
+        if (s.font) fontSel.value = s.font;
+        if (s.weight) fontWeightSel.value = s.weight;
+        if ('th' in s) { thSlider.value = s.th; thVal.textContent = s.th; } else { thVal.textContent = thSlider.value; }
+        if (typeof s.vertical === 'boolean') verticalChk.checked = s.vertical;
+        if (typeof s.grid === 'boolean') gridChk.checked = s.grid;
+      } catch (e) { }
+    }
+
+    // 値表示
+    thSlider.addEventListener('input', () => thVal.textContent = thSlider.value);
+
+    // ライブ更新（デバウンス）
+    let rafToken = 0, debounceTimer = 0;
+    const scheduleUpdate = () => {
+      cancelAnimationFrame(rafToken);
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(() => {
+        rafToken = requestAnimationFrame(() => { generate(); saveSettings(); });
+      }, 40);
     };
-    try { sessionStorage.setItem(SS_KEY, JSON.stringify(s)); } catch(e){}
-  }
-  function loadSettings(){
-    try{
-      const s = JSON.parse(sessionStorage.getItem(SS_KEY) || '{}');
-      if (s.size) sizeSel.value = s.size;
-      if (s.font) fontSel.value = s.font;
-      if (s.weight) fontWeightSel.value = s.weight;
-      if ('th' in s) { thSlider.value = s.th; thVal.textContent = s.th; } else { thVal.textContent = thSlider.value; }
-      if (typeof s.invert === 'boolean') invertChk.checked = s.invert;
-      if (typeof s.grid === 'boolean') gridChk.checked = s.grid;
-    }catch(e){}
-  }
 
-  // 値表示
-  thSlider.addEventListener('input', ()=> thVal.textContent = thSlider.value);
+    // イベント
+    [textInput, sizeSel, fontSel, fontWeightSel, thSlider, verticalChk, gridChk].forEach(ctrl => {
+      const ev = (ctrl.type === 'text') ? 'input' : 'change';
+      ctrl.addEventListener(ev, scheduleUpdate);
+    });
 
-  // ライブ更新（デバウンス）
-  let rafToken = 0, debounceTimer = 0;
-  const scheduleUpdate = () => {
-    cancelAnimationFrame(rafToken);
-    clearTimeout(debounceTimer);
-    debounceTimer = setTimeout(()=> {
-      rafToken = requestAnimationFrame(()=>{ generate(); saveSettings(); });
-    }, 40);
-  };
+    // クリップボード系
+    async function copyText(el) {
+      const text = el.value.trim();
+      if (!text) { alert('出力が空です。名前を入力してください。'); return; }
+      try { await navigator.clipboard.writeText(text); alert('コピーしました。'); }
+      catch (e) { alert('コピーに失敗しました: ' + e); }
+    }
+    btnCopyHeader.addEventListener('click', () => copyText(outputHeader));
+    btnCopyHeader2.addEventListener('click', () => copyText(outputHeader));
+    btnCopyArray2.addEventListener('click', () => copyText(outputArray));
 
-  // イベント
-  [textInput,sizeSel,fontSel,fontWeightSel,thSlider,invertChk,gridChk].forEach(ctrl=>{
-    const ev = (ctrl.type === 'text') ? 'input' : 'change';
-    ctrl.addEventListener(ev, scheduleUpdate);
-  });
+    // JSON保存（配列出力から抽出）
+    btnSave.addEventListener('click', () => {
+      const text = outputArray.value.trim();
+      if (!text) { alert('出力が空です。名前を入力してください。'); return; }
+      const m = text.match(/let\s+配列\s*=\s*(\[.*\]);?$/s);
+      const json = m ? m[1] : "[]";
+      const blob = new Blob([json], { type: "application/json" });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = "kanji_bitmaps.json";
+      a.click();
+      URL.revokeObjectURL(a.href);
+    });
 
-  // クリップボード系
-  async function copyText(el){
-    const text = el.value.trim();
-    if (!text){ alert('出力が空です。名前を入力してください。'); return; }
-    try { await navigator.clipboard.writeText(text); alert('コピーしました。'); }
-    catch(e){ alert('コピーに失敗しました: ' + e); }
-  }
-  btnCopyHeader.addEventListener('click', ()=> copyText(outputHeader));
-  btnCopyHeader2.addEventListener('click', ()=> copyText(outputHeader));
-  btnCopyArray2.addEventListener('click', ()=> copyText(outputArray));
-
-  // JSON保存（配列出力から抽出）
-  btnSave.addEventListener('click', ()=>{
-    const text = outputArray.value.trim();
-    if (!text){ alert('出力が空です。名前を入力してください。'); return; }
-    const m = text.match(/let\s+配列\s*=\s*(\[.*\]);?$/s);
-    const json = m ? m[1] : "[]";
-    const blob = new Blob([json], {type:"application/json"});
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
-    a.download = "kanji_bitmaps.json";
-    a.click();
-    URL.revokeObjectURL(a.href);
-  });
-
-  // 16進数コード生成：2Dビット配列(0/1) → 16x16:XXXX... 形式
-  function bitmapToHeaderHex(bmp){
-    const size = bmp.length; // 正方形前提
-    let hex = "";
-    for (let y = 0; y < size; y++) {
-      let rowBits = 0, bitCount = 0, rowHex = "";
-      for (let x = 0; x < size; x++) {
-        rowBits = (rowBits << 1) | (bmp[y][x] ? 1 : 0); // 左→右, 1=黒
-        bitCount++;
-        if (bitCount === 4) {
-          rowHex += rowBits.toString(16).toUpperCase();
+    // 16進数コード生成：2Dビット配列(0/1) → 16x16:XXXX... 形式
+    function bitmapToHeaderHex(bmp) {
+      const size = bmp.length; // 正方形前提
+      let hex = "";
+      for (let y = 0; y < size; y++) {
+        let rowBits = 0, bitCount = 0, rowHex = "";
+        for (let x = 0; x < size; x++) {
+          rowBits = (rowBits << 1) | (bmp[y][x] ? 1 : 0); // 左→右, 1=黒
+          bitCount++;
+          if (bitCount === 4) {
+            rowHex += rowBits.toString(16).toUpperCase();
+            rowBits = 0; bitCount = 0;
+          }
+        }
+        if (bitCount > 0) { // サイズが4の倍数でない場合の埋め
+          rowHex += (rowBits << (4 - bitCount)).toString(16).toUpperCase();
           rowBits = 0; bitCount = 0;
         }
+        hex += rowHex; // 行連結
       }
-      if (bitCount > 0) { // サイズが4の倍数でない場合の埋め
-        rowHex += (rowBits << (4 - bitCount)).toString(16).toUpperCase();
-        rowBits = 0; bitCount = 0;
-      }
-      hex += rowHex; // 行連結
+      return `${size}x${size}:${hex}`;
     }
-    return `${size}x${size}:${hex}`;
-  }
 
-  // 生成本体
-  function generate(){
-    const text = (textInput.value || '').trim();
-    const size = parseInt(sizeSel.value);
-    const threshold = parseInt(thSlider.value);
-    const invert = invertChk.checked;
-    const showGrid = gridChk.checked;
-
-    const fontStack = fontSel.value;
-    const fontWeight = fontWeightSel.value;
-
-    canvasContainer.innerHTML = '';
-    outputHeader.value = '';
-    outputArray.value = '';
-
-    if (!text || text.length > 10) return;
-
-    const glyphs = [];
-    const headers = [];
-
-    for (const ch of text) {
-      const overs = Math.max(2, Math.floor(64/size));
-      const pad = overs * 3;
-
-      // 拡大キャンバス
-      const big = document.createElement('canvas');
-      big.width  = size * overs + pad * 2;
-      big.height = size * overs + pad * 2;
-      const bctx = big.getContext('2d');
-
-      // 背景
-      bctx.fillStyle = '#fff';
-      bctx.fillRect(0,0,big.width,big.height);
-
-      // 描画（中央寄せ）
-      bctx.fillStyle = '#000';
-      const px = size * overs;
-      bctx.font = `${fontWeight} ${px}px ${fontStack}`;
-      bctx.textBaseline = 'top';
-      const m = bctx.measureText(ch);
-      const tx = Math.max(0, (big.width - m.width)/2);
-      const ty = pad;
-      bctx.fillText(ch, tx, ty);
-
-      // 縮小ターゲット
-      const small = document.createElement('canvas');
-      small.width = size; small.height = size;
-      const sctx = small.getContext('2d');
-      sctx.imageSmoothingEnabled = true;
-      const srcX = Math.floor((big.width  - size * overs) / 2);
-      const srcY = Math.floor((big.height - size * overs) / 2);
-      sctx.drawImage(big, srcX, srcY, size * overs, size * overs, 0, 0, size, size);
-
-      // 2値化
-      const img = sctx.getImageData(0,0,size,size).data;
-      const bmp = Array.from({length:size}, ()=>Array(size).fill(0));
-      for (let y=0; y<size; y++){
-        for (let x=0; x<size; x++){
-          const idx = (y*size + x) * 4;
-          const r = img[idx], g = img[idx+1], b = img[idx+2];
-          const lum = 0.2126*r + 0.7152*g + 0.0722*b;
-          const darkness = 255 - lum;
-          bmp[y][x] = invert ? (darkness <= threshold ? 1 : 0)
-                             : (darkness >  threshold ? 1 : 0);
+    // （置換）ビットマップを時計回り90°回転（縦書き用の行優先データ化）
+    function rotateBitmapCW(bmp) {
+      const N = bmp.length;
+      const out = Array.from({ length: N }, () => Array(N).fill(0));
+      for (let y = 0; y < N; y++) {
+        for (let x = 0; x < N; x++) {
+          out[x][N - 1 - y] = bmp[y][x];
         }
       }
-      glyphs.push(bmp);
-      headers.push(bitmapToHeaderHex(bmp));
+      return out;
+    }
 
-      // プレビュー
+    // 追加：ビットマップを反時計回り90°回転（縦書き用の行優先データ化）
+    function rotateBitmapCCW(bmp) {
+      const N = bmp.length;
+      const out = Array.from({ length: N }, () => Array(N).fill(0));
+      for (let y = 0; y < N; y++) {
+        for (let x = 0; x < N; x++) {
+          out[N - 1 - x][y] = bmp[y][x]; // ← CCW
+        }
+      }
+      return out;
+    }
+
+
+
+    // 生成本体
+    function generate() {
+      const text = (textInput.value || '').trim();
+      const size = parseInt(sizeSel.value);
+      const threshold = parseInt(thSlider.value);
+      const vertical = verticalChk.checked;      // 縦書きモード
+      const showGrid = gridChk.checked;
+
+      const fontStack = fontSel.value;
+      const fontWeight = fontWeightSel.value;
+
+      canvasContainer.innerHTML = '';
+      outputHeader.value = '';
+      outputArray.value = '';
+
+      if (!text || text.length > 10) return;
+
+      const glyphsPreview = []; // プレビュー用：回転なし
+      const glyphsOutput = []; // 出力用：縦書き時に回転反映
+      const headers = [];
+
+      // 文字ごとのビットマップ生成
+      for (const ch of text) {
+        const overs = Math.max(2, Math.floor(64 / size));
+        const padBig = overs * 3;
+
+        // 拡大キャンバス（アンチエイリアス低減のため）
+        const big = document.createElement('canvas');
+        big.width = size * overs + padBig * 2;
+        big.height = size * overs + padBig * 2;
+        const bctx = big.getContext('2d');
+
+        // 背景
+        bctx.fillStyle = '#fff';
+        bctx.fillRect(0, 0, big.width, big.height);
+
+        // テキスト描画（中央寄せ）
+        bctx.fillStyle = '#000';
+        const px = size * overs;
+        bctx.font = `${fontWeight} ${px}px ${fontStack}`;
+        bctx.textBaseline = 'top';
+        const m = bctx.measureText(ch);
+        const tx = Math.max(0, (big.width - m.width) / 2);
+        const ty = padBig;
+        bctx.fillText(ch, tx, ty);
+
+        // 縮小ターゲット
+        const small = document.createElement('canvas');
+        small.width = size; small.height = size;
+        const sctx = small.getContext('2d');
+        sctx.imageSmoothingEnabled = true;
+        const srcX = Math.floor((big.width - size * overs) / 2);
+        const srcY = Math.floor((big.height - size * overs) / 2);
+        sctx.drawImage(big, srcX, srcY, size * overs, size * overs, 0, 0, size, size);
+
+        // 2値化（反転機能は無し）
+        const img = sctx.getImageData(0, 0, size, size).data;
+        const bmp = Array.from({ length: size }, () => Array(size).fill(0));
+        for (let y = 0; y < size; y++) {
+          for (let x = 0; x < size; x++) {
+            const idx = (y * size + x) * 4;
+            const r = img[idx], g = img[idx + 1], b = img[idx + 2];
+            const lum = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+            const darkness = 255 - lum;
+            bmp[y][x] = (darkness > threshold) ? 1 : 0;
+          }
+        }
+
+        glyphsPreview.push(bmp);
+
+        // ★縦書き時は 90°時計回りで出力（プレビューの向きと一致）、横書きは回転なし
+        // const outBmp = vertical ? rotateBitmapCW(bmp) : bmp;
+        const outBmp = vertical ? bmp : rotateBitmapCW(bmp);
+
+        glyphsOutput.push(outBmp);
+        headers.push(bitmapToHeaderHex(outBmp));
+
+      }
+
+      // ===== プレビュー描画（色・余白・穴・回転対応） =====
       const targetPx = 200;
       const scale = Math.max(2, Math.floor(targetPx / size));
-      const wrap = document.createElement('div');
-      wrap.className = 'canvasWrap';
-      wrap.title = `「${ch}」 ${size}×${size} / weight:${fontWeight} / ${previewFontName(fontStack)}${invert?' [反転]':''}`;
 
-      const vis = document.createElement('canvas');
-      vis.width = size*scale; vis.height = size*scale;
-      const vctx = vis.getContext('2d');
-      vctx.fillStyle = '#fff'; vctx.fillRect(0,0,vis.width,vis.height);
-      for (let y=0; y<size; y++){
-        for (let x=0; x<size; x++){
-          if (bmp[y][x]) {
-            vctx.fillStyle = '#000';
-            vctx.fillRect(x*scale, y*scale, scale, scale);
+      const gap = 1;                 // 文字間セル数
+      const pad = 2;                 // 外周セル数
+      const COLOR_BG = '#4c5157';  // 背景（1）
+      const COLOR_FG = '#bababa';  // 文字（2）
+      const COLOR_HOLE = '#ffffff';  // 穴（0）
+
+      const charCount = glyphsPreview.length;
+
+      // 論理レイアウト（回転前の内部座標系）
+      const totalCellsX_logic = vertical ? (pad * 2 + size)
+        : (pad * 2 + charCount * size + gap * (charCount - 1));
+      const totalCellsY_logic = vertical ? (pad * 2 + charCount * size + gap * (charCount - 1))
+        : (pad * 2 + size);
+
+      // 論理キャンバスへ描画
+      const logical = document.createElement('canvas');
+      logical.width = totalCellsX_logic * scale;
+      logical.height = totalCellsY_logic * scale;
+      const lctx = logical.getContext('2d');
+
+      // 背景
+      lctx.fillStyle = COLOR_BG;
+      lctx.fillRect(0, 0, logical.width, logical.height);
+
+      // 文字描画（縦書きは上下に積む／横書きは左右に連結）
+      for (let i = 0; i < charCount; i++) {
+        const bmp = glyphsPreview[i];
+        const baseX = vertical ? pad : (pad + i * (size + gap));
+        const baseY = vertical ? (pad + i * (size + gap)) : pad;
+        for (let y = 0; y < size; y++) {
+          for (let x = 0; x < size; x++) {
+            if (bmp[y][x]) {
+              const dx = (baseX + x) * scale;
+              const dy = (baseY + y) * scale;
+              lctx.fillStyle = COLOR_FG;
+              lctx.fillRect(dx, dy, scale, scale);
+            }
           }
         }
       }
-      if (showGrid){
-        vctx.strokeStyle = '#ddd'; vctx.lineWidth = 1;
-        for (let i=0; i<=size; i++){
-          vctx.beginPath(); vctx.moveTo(i*scale+0.5,0); vctx.lineTo(i*scale+0.5,vis.height); vctx.stroke();
-          vctx.beginPath(); vctx.moveTo(0,i*scale+0.5); vctx.lineTo(vis.width,i*scale+0.5); vctx.stroke();
-        }
+
+      // 四隅の穴（論理座標）
+      const Wc = totalCellsX_logic;
+      const Hc = totalCellsY_logic;
+      lctx.fillStyle = COLOR_HOLE;
+      const holes = [
+        { cx: 1, cy: 1 },
+        { cx: Wc - 2, cy: 1 },
+        { cx: 1, cy: Hc - 2 },
+        { cx: Wc - 2, cy: Hc - 2 },
+      ];
+      for (const { cx, cy } of holes) {
+        lctx.fillRect(cx * scale, cy * scale, scale, scale);
       }
+
+      // 表示キャンバス作成（縦書き時は横向き表示＝右回転90°）
+      const wrap = document.createElement('div');
+      wrap.className = 'canvasWrap';
+      wrap.title = `${size}×${size} / ${vertical ? '縦書き(横向き表示)' : '横書き'} / gap:${gap} / pad:${pad}`;
+
+      const vis = document.createElement('canvas');
+      if (!vertical) {
+        vis.width = logical.width;
+        vis.height = logical.height;
+        const vctx = vis.getContext('2d');
+        vctx.drawImage(logical, 0, 0);
+      } else {
+        vis.width = logical.height;
+        vis.height = logical.width;
+        const vctx = vis.getContext('2d');
+        vctx.save();                             // ← 追加：状態保存
+        vctx.translate(0, vis.height);          // ← 左回り用の原点移動
+        vctx.rotate(-Math.PI / 2);                 // ← -90° 回転（左回り）
+        vctx.drawImage(logical, 0, 0);
+        vctx.restore();                          // ← 追加：変換を元に戻す
+      }
+
+
+      // （置換）グリッド描画ブロック
+      if (showGrid) {
+        const vctx = vis.getContext('2d');
+        vctx.save();
+        vctx.setTransform(1, 0, 0, 1, 0, 0); // ← 追加：変換行列をリセット
+
+        vctx.lineWidth = 1;
+        vctx.strokeStyle = '#333';
+
+        const cellsX = vertical ? (logical.height / scale) : (logical.width / scale);
+        const cellsY = vertical ? (logical.width / scale) : (logical.height / scale);
+
+        for (let gx = 0; gx <= cellsX; gx++) {
+          vctx.beginPath();
+          vctx.moveTo(gx * scale + 0.5, 0);
+          vctx.lineTo(gx * scale + 0.5, vis.height);
+          vctx.stroke();
+        }
+        for (let gy = 0; gy <= cellsY; gy++) {
+          vctx.beginPath();
+          vctx.moveTo(0, gy * scale + 0.5);
+          vctx.lineTo(vis.width, gy * scale + 0.5);
+          vctx.stroke();
+        }
+        vctx.restore();
+      }
+
+
       wrap.appendChild(vis);
       canvasContainer.appendChild(wrap);
+      // ===== プレビュー描画ここまで =====
+
+      // 出力：16進数コード（縦書き時は回転後ビット）
+      outputHeader.value = headers.join('\n');
+
+      // 出力：配列（縦書き時は回転後ビット）
+      outputArray.value = 'let 配列 = ' + JSON.stringify(glyphsOutput) + ';';
     }
 
-    // 出力：16進数コード（1文字1行）
-    outputHeader.value = headers.join('\n');
+    function previewFontName(stack) {
+      const m = stack.match(/^"([^"]+)"/);
+      return m ? m[1] : stack.split(",")[0];
+    }
 
-    // 出力：配列（従来形式）
-    outputArray.value = 'let 配列 = ' + JSON.stringify(glyphs) + ';';
-  }
+    // 初期化
+    window.addEventListener('DOMContentLoaded', () => {
+      loadSettings();            // 同一タブ内でのみ設定を復元
+      textInput.value = '';      // テキストは常に未入力から
+      $('thVal').textContent = $('thSlider').value;
+      scheduleUpdate();
+    });
 
-  function previewFontName(stack){
-    const m = stack.match(/^"([^"]+)"/);
-    return m ? m[1] : stack.split(",")[0];
-  }
-
-  // 初期化
-  window.addEventListener('DOMContentLoaded', ()=>{
-    loadSettings();            // 同一タブ内でのみ設定を復元
-    textInput.value = '';      // テキストは常に未入力から
-    $('thVal').textContent = $('thSlider').value;
-    scheduleUpdate();
-  });
-
-  // BFCache（戻る/進む）復帰時も入力欄を空にしたい場合は以下を有効化
-  // window.addEventListener('pageshow', (e) => {
-  //   if (e.persisted) { textInput.value = ''; scheduleUpdate(); }
-  // });
-</script>
+    // BFCache（戻る/進む）復帰時も入力欄を空にしたい場合は以下を有効化
+    // window.addEventListener('pageshow', (e) => {
+    //   if (e.persisted) { textInput.value = ''; scheduleUpdate(); }
+    // });
+  </script>
 </body>
+
 </html>
