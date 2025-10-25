@@ -1,5 +1,5 @@
 ```package
-github:TomoniCodeDevelopers/kanji-craft#v1.0.1
+github:TomoniCodeDevelopers/kanji-craft#v2.0.0
 ```
 
 # @explicitHints true
@@ -54,6 +54,7 @@ github:TomoniCodeDevelopers/kanji-craft#v1.0.1
 そのあと、「読み込んでプレビュー」ボタンをクリックすると、保存した3Dデータが読み込まれるはずです。
 
 問題なければ、「STLを書き出し」ボタンをクリックすると、3Dプリンターで印刷するときに使うファイルがダウンロードできます。
+
 
 
 
