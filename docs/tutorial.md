@@ -9,44 +9,34 @@ github:TomoniCodeDevelopers/kanji-craft#v1.0.1
 
 
 ## ステップ1
-### ブロックをおく
-エージェントが文字を書きはじめる場所をえらぶブロックを **「エージェント」** の中からえらびます。
-
-<img src="https://raw.githubusercontent.com/TomoniCodeDevelopers/kanji-craft-lesson/main/docs/img2.png" higth="200">
-
-つぎに、ツールボックスから **「漢字クラフト」** をクリック。  
+### 漢字クラフトのブロックをおく
+ツールボックスから **「漢字クラフト」** をクリック。  
 そこにあるブロックをもってきて、ブロックをつなげる。
 
 <img src="https://raw.githubusercontent.com/TomoniCodeDevelopers/kanji-craft-lesson/main/docs/img1.png" higth="200">
 
-すべてつなげるとこんな感じになります。
-
-<img src="https://raw.githubusercontent.com/TomoniCodeDevelopers/kanji-craft-lesson/main/docs/img3.png" higth="500">
+つなげるとこんな感じになります。
+<img src="https://raw.githubusercontent.com/TomoniCodeDevelopers/kanji-craft-lesson/main/docs/img2.png" higth="200">
 
 ## ステップ2
-### Webツールから変換
+### Webツールから変換して実行
 「[漢字クラフト Webツール](https://TomoniCodeDevelopers.github.io/kanji-craft-lesson/)」を開きます。  
 
-文字を入力すると、**16進数コード** の書き方に変わります。  
+文字を入力すると、**16進数コード** の書き方に変わります。
+これをコピーしましょう。
 
-Minecraftに戻ってきて、
-*「エージェントに...」** ブロックの、(" ")になっている場所に、
-**16進数コード** をそのまま入れます。 
+コピーができたらマインクラフトにもどってきて、
+ブロックの、(" ")になっている場所に、コピーした**16進数コード** をそのまま入れます。
 
-例：  
-16x16:なんとかかんとか
+
+このまま右下の緑のボタンを押して、**チャットモード** にした状態で「run」とチャットをすると漢字が書かれます。
+
+※うまく動かない場合は、何度か「run」とチャットしたり、もう一度緑のボタンを押してください。
+
 
 
 
 ## ステップ3
-### 実行
-エージェントに文字を書いてもらう向きを「床」「壁」どちらかえらんで、
-原点の位置を決めて実行すると、エージェントが一つずつブロックを置いて漢字を描いてくれます。  
-
-
-
-
-## ステップ4
 ### ストラクチャーブロックを使ってみよう
 ストラクチャーブロックを右クリックし、設定を開きます。
 モードを「3Dエクスポート」にして、サイズを指定していきます。
@@ -64,6 +54,7 @@ Minecraftに戻ってきて、
 そのあと、「読み込んでプレビュー」ボタンをクリックすると、保存した3Dデータが読み込まれるはずです。
 
 問題なければ、「STLを書き出し」ボタンをクリックすると、3Dプリンターで印刷するときに使うファイルがダウンロードできます。
+
 
 
 
